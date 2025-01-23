@@ -1,4 +1,4 @@
-# on Metacentrum load modules 
-module add intelcdk-19.0.4
-module add openmpi-1.8.2-intel
-module rm intelcdk-15
+module add intel-oneapi-compilers
+module add intel-oneapi-mkl
+module add openmpi/4.1.3-intel-2021.6.0-4vqcbbe
+

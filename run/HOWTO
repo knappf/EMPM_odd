@@ -2,7 +2,7 @@
 #  compillers and PATHS setup
 source configure_compilers.sh
 # modules elwe, eltu
-source modules
+source modules.sh
 
 #  loaded modules   
  1) metabase/1                                         9) libpciaccess/0.16-gcc-10.2.1-f4q3srx    17) psm/2017-04-28-gcc-10.2.1-hrczaup

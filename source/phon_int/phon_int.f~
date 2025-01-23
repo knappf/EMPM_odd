@@ -1,0 +1,91 @@
+*     
+*     Program phon_dens1 computes 1phonon densities in proton-neutron 
+*     J-coupled formalism.
+
+*     last update 8.2.2010
+
+      program phon_dens1
+
+      use phoninterac
+
+      implicit double precision (a-h,o-z)
+
+
+      include 'input_phon_int.inc'
+      include 'formats_phon_int.inc'
+      include 'types_phon_int.inc'
+
+      type(level_typ),dimension(:), allocatable :: levn,levp
+      
+*     loading of input data 
+
+      xrotrunc=1.d-10
+      
+      write(*,*)'Loading of input '
+
+      open(1,file='input_tda_coup.dat',status='old',form='formatted')
+            
+      read(1,15)ia,iz
+      read(1,15)ihnmn,ihnmx
+      read(1,15)ihpmn,ihpmx
+      read(1,15)ipnmn,ipnmx
+      read(1,15)ippmn,ippmx
+      read(1,26)alfa,beta
+      read(1,*)
+      read(1,15)iparmn,iparmx
+      read(1,15)jminn,jmaxn
+      close(1)
+
+      allocate(levn(ipnmx),levp(ippmx))
+
+
+      open(1,file='singpart_coup.dat',status='old',form='formatted')
+
+      read(1,*)
+      read(1,*)
+
+      do i=1,ipnmx
+       read(1,16)nt,lt,jt,erspnt,ersppt
+       levn(i)%n=nt
+       levn(i)%l=lt
+       levn(i)%j=jt
+      enddo
+      
+      rewind(1)
+      
+      read(1,*)
+      read(1,*)
+
+      do i=1,ippmx
+       read(1,16)nt,lt,jt,erspnt,ersppt
+       levp(i)%n=nt
+       levp(i)%l=lt
+       levp(i)%j=jt
+      enddo
+
+      close(1)
+
+      jmax=jmaxn
+      
+c      call checkf
+c      call checkfmat
+c      call checkro
+      
+c      stop
+      
+      
+      
+
+c      call vinth(-1,ifmx,jmax,levp) ! proton hole
+      call vinth(1,ifmx,jmax,levn)  ! neutron hole
+c      call vintp(-1,ifmx,jmax,levp) ! proton particle
+c      call vintp(1,ifmx,jmax,levn)  ! neutron particle
+
+
+
+      
+      end 
+*     
+*     END of the main program 
+* 
+

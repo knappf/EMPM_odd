@@ -1,0 +1,46 @@
+
+#  compillers and PATHS setup
+source configure_compilers.sh
+# modules elwe, eltu
+source modules
+
+#  loaded modules   
+ 1) metabase/1                                         9) libpciaccess/0.16-gcc-10.2.1-f4q3srx    17) psm/2017-04-28-gcc-10.2.1-hrczaup
+ 2) intel-oneapi-tbb/2021.6.0-intel-2021.6.0-e76eimi  10) ncurses/6.2-gcc-10.2.1-h3werp5          18) libnl/3.3.0-gcc-10.2.1-oa4lipo
+ 3) libiconv/1.16-gcc-10.2.1-jbvbjyi                  11) hwloc/2.7.1-gcc-10.2.1-a7ilbqq          19) rdma-core/39.1-gcc-10.2.1-jamlwco
+ 4) python/3.9.12-gcc-10.2.1-rg2lpmk                  12) libevent/2.1.12-gcc-10.2.1-dqblgi5      20) gdrcopy/2.3-gcc-10.2.1-7evvrzi
+ 5) xz/5.2.5-gcc-10.2.1-fteagxc                       13) numactl/2.0.14-gcc-10.2.1-gasmwpx       21) ucx/1.12.1-gcc-10.2.1-ixjicks
+ 6) zlib/1.2.12-gcc-10.2.1-7qmmk4c                    14) opa-psm2/11.2.206-gcc-10.2.1-q4gu6pl    22) openmpi/4.1.3-intel-2021.6.0-yk4yu4u
+ 7) libxml2/2.9.13-gcc-10.2.1-42uofzw                 15) openjdk/11.0.14.1_1-gcc-10.2.1-2ll77ke  23) intel-oneapi-mkl/2022.1.0-intel-2021.6.0-ndqwmkd
+ 8) cuda/11.6.2-gcc-10.2.1-nwpmxyy                    16) pmix/4.1.2-gcc-10.2.1-enmnubp           24) intel-oneapi-compilers/2022.1.0-gcc-10.2.1-ir6y5fb
+ 
+
+# calculation of F-matrix elements
+cd run/fmat
+./Fmat
+
+# TDA calculation
+cd run/tda
+./Tda
+
+#  
+#  # of MPI ranks and OpenMP threads
+source mpi_openmp_set.sh
+
+# diagonalisation in  1particle(hole) 1-phonon subspace 
+cd /eqm_par_1ph_MPI  # for 1particle  1 phonon
+
+# or 
+
+cd /eqm_hole_1ph_MPI # for 1 hole  1-phonon
+
+# first 1-phonon densities have to be generated 
+# simple script ./run_phon_dens1.sh has to be run
+# proper path to mpirun must be set and number of MPI ranks must be specified 
+# cripte assumes that # of MPI ranks is set via NUM_MPI_PROCS enviromental variable 
+# files with 1-phonon densities are store in run/scratch directory
+./run_phon_dens1.sh
+
+# 
+#
+#

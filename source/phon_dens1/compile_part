@@ -1,0 +1,2 @@
+ifort anglib.f90 input_sp.f90  phon_dens1_part_cut.f -o phon_dens1_part
+

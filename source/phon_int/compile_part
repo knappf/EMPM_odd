@@ -1,0 +1,2 @@
+ifort -O3 anglib.f90 input_sp.f90 interac_part_fast4_cut.f phon_int.f -o phon_int_part_fast
+

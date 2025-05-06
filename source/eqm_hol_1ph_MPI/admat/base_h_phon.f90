@@ -11,7 +11,7 @@ contains
 
    integer ::  ipar_bs,ijj_bs,ipar_sp,nf,dim_phon,dim_bs,dim_sp_n,dim_sp_p,jmin,jmax,it_bs,tzi,i_sp,n_spur
 
-   double precision :: en,etrunc
+   double precision :: en,etrunc,en_CM
    
    type(phonbase_typ), dimension (:), allocatable :: phonbs,phonbs_reor
    type(phon_typ), dimension (:), allocatable :: phon   
@@ -33,6 +33,13 @@ contains
    allocate(ind_red(dim_bs))
     
 
+  open(23,file='ethr_1f.dat',status='old',form='formatted')
+!   write(*,*)' Energy threshold for 2 phonon states?'
+   read(23,*)etrunc
+   read(23,*)en_CM
+!   write(*,*)etrunc
+  close(23) 
+
    open (3,file=name1f,status='old',form='unformatted')
 
     do while (.not.eof(3))
@@ -42,7 +49,7 @@ contains
        phon(i)%enf=en
        phon(i)%tz=itt
        phon(i)%spur=0
-       if (ipar==-1.and.ijj==1.and.itt==0.and.en < 1.0d0) phon(i)%spur=1  ! tag the spurious 1-phonon state
+       if (ipar==-1.and.ijj==1.and.itt==0.and.en <= en_CM) phon(i)%spur=1  ! tag the spurious 1-phonon state
     enddo
 
    close(3)
@@ -107,11 +114,7 @@ contains
    mxtr=0
    nxtr=0
 
-  open(23,file='ethr_1f.dat',status='old',form='formatted')
-!   write(*,*)' Energy threshold for 2 phonon states?'
-   read(23,*)etrunc
-!   write(*,*)etrunc
-  close(23) 
+
 
 !  write(*,*)' Energy threshold for 1 phonon states?'
 !  write(*,*)etrunc

@@ -9,7 +9,7 @@ contains
 
    integer ::  ipar_bs,ijj_bs,ipar_sp,nf,dim_phon,dim_bs,dim_sp_n,dim_sp_p,jmin,jmax,it_bs,tzi,i_sp
 
-   double precision :: en 
+   double precision :: en, en_CM
    
    type(phonbase_typ), dimension (:), allocatable :: phonbs
    type(phon_typ), dimension (:), allocatable :: phon   
@@ -18,10 +18,10 @@ contains
    integer, dimension (:), allocatable :: ind_red
    integer, dimension(:), allocatable :: par_lev, hol_lev
 
+
    character*30 name1f
    
-    
-
+  
    if (nf.eq.1) name1f='1phonon/1f_states.dat'
 
    dim_bs=30000
@@ -29,6 +29,11 @@ contains
    allocate(phonbs(dim_bs))
    allocate(ind_red(dim_bs))
     
+
+   en_CM=3.3d0  
+   open (3,file='en_CM.dat',status='old',form='formatted')
+   read(3,*)en_CM
+   close(3)
 
 
    open (3,file=name1f,status='old',form='unformatted')
@@ -40,7 +45,7 @@ contains
        phon(i)%enf=en
        phon(i)%tz=itt
        phon(i)%spur=0
-       if (ipar == -1 .and. ijj ==1 .and. itt == 0 .and. en <= 1.0) phon(i)%spur=1  ! tag the spurious CM phonon
+       if (ipar == -1 .and. ijj ==1 .and. itt == 0 .and. en <= en_CM) phon(i)%spur=1  ! tag the spurious CM phonon
     enddo
 
    close(3)

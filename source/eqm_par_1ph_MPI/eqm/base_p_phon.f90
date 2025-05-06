@@ -11,7 +11,7 @@ contains
 
    integer ::  ipar_bs,ijj_bs,ipar_sp,nf,dim_phon,dim_bs,dim_sp_n,dim_sp_p,jmin,jmax,it_bs,tzi,i_sp,n_spur
 
-   double precision :: en,etrunc
+   double precision :: en,etrunc,en_CM
    
    type(phonbase_typ), dimension (:), allocatable :: phonbs,phonbs_reor
    type(phon_typ), dimension (:), allocatable :: phon   
@@ -32,6 +32,12 @@ contains
    allocate(phonbs(dim_bs),phonbs_reor(dim_bs))
    allocate(ind_red(dim_bs))
     
+   open(23,file='ethr_1f.dat',status='old',form='formatted')
+!   write(*,*)' Energy threshold for 2 phonon states?'
+   read(23,*)etrunc
+   read(23,*)en_CM
+!   write(*,*)etrunc
+   close(23) 
 
 
    open (3,file=name1f,status='old',form='unformatted')
@@ -107,12 +113,6 @@ contains
    allocate(mxtr(dim_base),nxtr(dim_base))
    mxtr=0
    nxtr=0
-
-  open(23,file='ethr_1f.dat',status='old',form='formatted')
-!   write(*,*)' Energy threshold for 2 phonon states?'
-   read(23,*)etrunc
-!   write(*,*)etrunc
-  close(23) 
 
   write(*,*)' Energy threshold for 1 phonon states?'
   write(*,*)etrunc

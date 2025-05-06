@@ -49,7 +49,7 @@ contains
        phon(i)%enf=en
        phon(i)%tz=itt
        phon(i)%spur=0
-       if (ipar==-1.and.ijj==1.and.itt==0.and.en < 1.0d0) phon(i)%spur=1  ! tag the spurious 1-phonon state
+       if (ipar==-1.and.ijj==1.and.itt==0.and.en < en_CM) phon(i)%spur=1  ! tag the spurious 1-phonon state
     enddo
 
    close(3)
